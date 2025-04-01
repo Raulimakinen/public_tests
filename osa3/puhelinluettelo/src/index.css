@@ -1,0 +1,31 @@
+
+
+li {
+    color: rgb(0, 0, 0);
+    padding-top: 13px;
+    font-size: 15px;
+}
+
+.success{
+    font-size: 20px;
+    font-style:italic;
+    color:rgb(36, 218, 0);
+    background-color: rgb(172, 245, 154);
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.error{
+    font-size: 20px;
+    font-style: italic;
+    color: rgb(255, 17, 0);
+    background-color: rgb(255, 136, 128);
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
