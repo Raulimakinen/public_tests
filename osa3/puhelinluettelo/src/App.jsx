@@ -17,10 +17,13 @@ const App = () => {
 useEffect(()=>{
   phoneBookHandler
     .getAll()
-    .then(response =>{setPersons(response.data)})
+    .then(response =>{
+      console.log("here",response)
+      setPersons(response)})
     .catch(error => console.error("Error getting stuff", error))
     
 },[])
+console.log(persons)
 
 
   const nameExists = (newName) => {
