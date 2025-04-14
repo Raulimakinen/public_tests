@@ -1,14 +1,10 @@
 const mongoose = require('mongoose')
-
-
-
-
 const url = process.env.MONGODB_URI
 
 
 mongoose.set('strictQuery', false)
-
 console.log('connecting to' , url)
+
 
 mongoose.connect(process.env.MONGODB_URI)
 .then(result => {
@@ -27,13 +23,13 @@ const personSchema = new mongoose.Schema({
   } 
 })
 
-personSchema.set('toJSON',{
+/*personSchema.set('toJSON',{
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedobject.__v
   }
-})
+}) */
 
 
 const Person = mongoose.model('Person', personSchema)
