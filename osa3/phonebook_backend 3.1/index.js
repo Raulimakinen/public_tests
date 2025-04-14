@@ -6,10 +6,21 @@ const cors = require('cors')
 const { Person } = require('./models/person')
 
 
+const errorHandler = (error,req,res,next) =>{
+  console.error(error.message)
+  if (error.name === 'CastError'){
+    return res.status(400).send({error: 'malformatted id'})
+}
+next(error)
+}
+
+
 
 app.use(cors())
 app.use(express.static('dist'))
 app.use(express.json())
+app.use(errorHandler)
+
 
 
 morgan.token('contents' , function getContents(req) {
@@ -17,16 +28,17 @@ morgan.token('contents' , function getContents(req) {
 })
 app.use(morgan(':method :url :response-time :contents'))
 
+
 app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/persons', (req, res) => 
-  Person.find({}).then(persons => {
-     res.json(persons)
+  Person.find({})
+.then(persons => {
+   res.json(persons) 
     })
-   
- 
+   .catch(error => next(error))
 )
 
 app.get('/api/persons/:id', (req, res, next)=> {
@@ -73,8 +85,9 @@ app.post('/api/persons',(req,res)=> {
   }
 const person = new Person({ name, number })
 
-person.save().then(savedPerson => res.json(savedPerson))
-
+person.save()
+.then(savedPerson => res.json(savedPerson))
+.catch(error => next(error))
 })
 
 
@@ -93,6 +106,7 @@ app.get('/api/info',(req,res)=> {
     res.send(`<p>Phonebook has info for ${count} people </p>
         <p>${timestamp}</p>`)
   })
+  .catch(error => next(error))
                  
 })
 
