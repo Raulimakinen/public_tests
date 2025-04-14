@@ -8,6 +8,7 @@ const { Person } = require('./models/person')
 
 
 app.use(cors())
+app.use(express.static('dist'))
 app.use(express.json())
 
 
@@ -28,18 +29,37 @@ app.get('/api/persons', (req, res) =>
  
 )
 
-app.get('/api/persons/:id', (req, res)=> {
-  Person.findById(req.params.id).then(person=> {
+app.get('/api/persons/:id', (req, res, next)=> {
+  Person.findById(req.params.id)
+  .then(person=> {
     if (person) {
      res.json(person)
   } else {
     res.status(404).end()
   }
   })
-
-  
+  .catch(error=>next(error))
 })
-  
+
+
+app.put('/api/persons/:id', (req, res, next)=> {
+  const {name,number} = req.body
+  Person.findById(req.params.id)
+  .then(person=> {
+    if(!person) {
+      return res.status(404).end()
+    }
+    person.name=name
+    person.number=number
+
+    return person.save().then(updatedPerson => {
+    res.json(updatedPerson)
+  })
+})
+  .catch(error =>next(error))
+})
+
+
 
 const generateId = () => {
  return Math.floor(Math.random()*50000)
@@ -60,9 +80,10 @@ person.save().then(savedPerson => res.json(savedPerson))
 
 app.delete('/api/persons/:id',(req, res) => {
   Person.findByIdAndDelete(req.params.id)
-    .then(() => res.status(204).end())
-  
- 
+    .then(result => {
+      res.status(204).end()
+})  
+    .catch(error => next(error))
 })
 
 app.get('/api/info',(req,res)=> {
@@ -75,7 +96,7 @@ app.get('/api/info',(req,res)=> {
                  
 })
 
-app.use(express.static('dist'))
+
 
 
 
