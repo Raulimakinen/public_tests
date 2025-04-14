@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const password = process.argv[2]
+
 
 const url = process.env.MONGODB_URI
 
@@ -9,13 +9,13 @@ const url = process.env.MONGODB_URI
 mongoose.set('strictQuery', false)
 
 console.log('connecting to' , url)
+
 mongoose.connect(process.env.MONGODB_URI)
 .then(result => {
   console.log('yhdistetty MongoDB')
 })
 .catch((error) => {
   console.log('Virhe yhdistettäessä Mongoon', error.message)
-
 })
 
 const personSchema = new mongoose.Schema({
@@ -50,11 +50,11 @@ if (process.argv.length === 3) {
   const name = process.argv[3]
   const number = process.argv[4]
 
+  const person = new Person ({
+    name:name,
+    number:bnumber
+  })
 
-const person = new Person({
-  name,
-  number,
-})
 
 
 person.save().then(result => {
@@ -67,4 +67,4 @@ person.save().then(result => {
 
 
   
-module.exports = Person
+module.exports = {Person}
