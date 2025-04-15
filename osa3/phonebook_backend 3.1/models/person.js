@@ -16,10 +16,17 @@ mongoose.connect(process.env.MONGODB_URI)
 
 const personSchema = new mongoose.Schema({
   name :{type:String,
-          required:true,
+    minlength: 3,
+    required:true,
   },
-  number:{type:String ,
+  number:{type:String,
           required:true,
+          validate:{ 
+            validator: function(v) {
+              return /^\d{2,3}-\d{7,}$/.test(v);
+            },
+            message : props => `${props.value} numero ei ole oikeassa muodossa!`
+          }
   } 
 })
 

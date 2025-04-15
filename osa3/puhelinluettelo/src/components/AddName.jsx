@@ -7,7 +7,7 @@ const AddName = ({ addName, newName , handleNewName, newNumber, handleNewNumber 
           Name: <input value={newName} onChange={handleNewName}/>
         </div>
         <div>
-          Number: <input type="number" value={newNumber} onChange={handleNewNumber}/>
+          Number: <input type="text" value={newNumber} onChange={handleNewNumber}/>
         </div>
         <div>
           <button type="submit">add</button>

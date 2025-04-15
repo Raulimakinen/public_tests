@@ -82,8 +82,9 @@ console.log(persons)
         setNewNumber('')
   })
     .catch(error => {
-          console.error("error",error)
-          setNotification( {message:"Failed to add name", type:"error"})
+          console.error("error with name",error)
+          console.log(error.response.data)
+          setNotification( {message: JSON.stringify(error.response.data), type:"error"})
           setTimeout(()=>{ setNotification({message: null, type:""}) },5000)
         })
 
